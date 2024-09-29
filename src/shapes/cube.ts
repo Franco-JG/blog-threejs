@@ -1,4 +1,4 @@
-import { MeshBasicMaterial, BoxGeometry, Mesh, AxesHelper } from "three";
+import { MeshBasicMaterial, BoxGeometry, Mesh } from "three";
 import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
@@ -6,7 +6,7 @@ import { createOrbitControls } from '../core/orbit-controls.ts';
 
 export function Scene1(canvas: HTMLCanvasElement) {
   const scene = createScene()
-  const camera = createCamera(canvas)
+  const camera = createCamera()
   const renderer = createRenderer(canvas)
   const controls = createOrbitControls(camera, renderer)
     

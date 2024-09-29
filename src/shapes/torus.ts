@@ -6,7 +6,7 @@ import { createOrbitControls } from '../core/orbit-controls.ts';
 
 export function Scene2(canvas: HTMLCanvasElement) {
   const scene = createScene()
-  const camera = createCamera(canvas)
+  const camera = createCamera()
   const renderer = createRenderer(canvas)
   const controls = createOrbitControls(camera, renderer)
     

@@ -2,22 +2,38 @@ body {
 	font-family: Monospace;
 	background-color: #fff;
 	color: #444;
-	margin: auto;
-	padding: .5in;
-	max-width: 7in;
 	text-align: justify;
 	height: 100vh;
+	padding: 1em;
   }
   
+  header {
+	/* border: 1px solid red; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
   section {
+	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column; /* Cambia la dirección a columna */
 	align-items: center; /* Centra el contenido horizontalmente */
 	justify-content: center; /* Centra el contenido verticalmente */
 	margin-bottom: 20px; /* Espaciado entre secciones si es necesario */
+	width: 100%;
   }
-  
+
+  article {
+	/* border: 1px solid green; */
+	width: 90%;
+	max-width: 640px;  /* Puedes establecer un ancho máximo si lo deseas */
+	margin: 0 calc(25%);  /* Margen de 25% menos un ajuste de pixel */
+  }
+
   canvas {
+	width: 100%;
+	height: auto;
 	margin-bottom: 10px; /* Espacio entre el canvas y el párrafo */
 	box-shadow: 5px 5px 18px 4px rgba(0,0,0,0.25);
   }

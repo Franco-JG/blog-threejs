@@ -1,4 +1,5 @@
 import { WebGLRenderer, PCFShadowMap } from "three";
+import { sizes } from "../main";
 
 export function createRenderer(canvas : HTMLCanvasElement): WebGLRenderer {
 	const renderer =  new WebGLRenderer({
@@ -8,19 +9,15 @@ export function createRenderer(canvas : HTMLCanvasElement): WebGLRenderer {
 		
 	renderer.shadowMap.enabled = true
 	renderer.shadowMap.type = PCFShadowMap
-	renderer.setSize(canvas.width, canvas.height)
-	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+	
+	renderer.setSize(sizes.width, sizes.height)
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1))
 
+	window.addEventListener('resize', () => {
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+    });
 	return renderer
 }
 
-// export function updateRenderer() {
-// 	renderer.setSize(sizes.width, sizes.height)
-// 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-// }
 
-// window.addEventListener('resize', () => {
-// 	sizes.width = window.innerWidth
-// 	sizes.height =  window.innerHeight
-// 	updateRenderer()
-// })
