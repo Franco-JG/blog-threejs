@@ -7,18 +7,20 @@ export const sizes = {
     height: window.innerHeight
   }
 
-export const camera = new PerspectiveCamera(
-  FOV,
-  sizes.width/sizes.height
-)
+export function createCamera(canvas: HTMLCanvasElement): PerspectiveCamera {
 
-camera.position.set(9,4,9)
+  const camera = new PerspectiveCamera(
+    FOV,
+    canvas.width/canvas.height
+  )
 
-window.addEventListener('resize', () => {
-	sizes.width = window.innerWidth
-	sizes.height =  window.innerHeight
-	camera.aspect = sizes.width/ sizes.height
-	camera.updateProjectionMatrix()
-})
+  camera.position.z = 3
 
-export default camera
+  return camera;
+}
+// window.addEventListener('resize', () => {
+// 	sizes.width = window.innerWidth
+// 	sizes.height =  window.innerHeight
+// 	camera.aspect = sizes.width/ sizes.height
+// 	camera.updateProjectionMatrix()
+// })
