@@ -1,5 +1,6 @@
 import './style.css'
 import { geometryShaders } from './shapes/geometryShaders'
+import { elementsInstances } from './shapes/elementsInstances'
 
 
 const article = document.querySelector('article')
@@ -9,8 +10,11 @@ export const sizes = {
     height: 360
 }
 
-const canvas = <HTMLCanvasElement> document.querySelector('#scene1')
-geometryShaders(canvas)
+const normales = <HTMLCanvasElement> document.querySelector('#scene1')
+const instancias = <HTMLCanvasElement> document.querySelector('#scene2')
+
+geometryShaders(normales)
+elementsInstances(instancias)
 
 window.addEventListener('resize', () => {
     sizes.width = article?.clientWidth || 640;
