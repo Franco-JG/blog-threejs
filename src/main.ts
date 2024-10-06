@@ -1,23 +1,30 @@
 import './style.css'
-import { geometryShaders } from './shapes/geometryShaders'
-import { elementsInstances } from './shapes/elementsInstances'
+import { cube } from "./shapes/cube.ts";
 
-
-const article = document.querySelector('article')
+const section = document.querySelector('section');
 
 export const sizes = {
-    width: 640,
-    height: 360
+    width: 0,
+    height: 0
 }
 
-const normales = <HTMLCanvasElement> document.querySelector('#scene1')
-const instancias = <HTMLCanvasElement> document.querySelector('#scene2')
 
-geometryShaders(normales)
-elementsInstances(instancias)
+if (section) {
+    // Establece el tamaño inicial basado en el ancho del elemento section
+    sizes.width = section.clientWidth;  // 50% del ancho del section
+    sizes.height = (sizes.width * 9) / 16;  // Mantén la relación de aspecto 16:9
+}
 
-window.addEventListener('resize', () => {
-    sizes.width = article?.clientWidth || 640;
-    sizes.height = (sizes.width / 16) * 9; // Mantener la relación de aspecto 16:9
-    
-});
+// Función para ajustar el tamaño del canvas y los objetos
+function onWindowResize() {
+    if (section) {
+        sizes.width = section.clientWidth;  // 50% del ancho del section
+        sizes.height = (sizes.width * 9) / 16;  // Mantén la relación de aspecto 16:9
+    }
+}
+
+// Añade el event listener de resize
+window.addEventListener('resize', onWindowResize);
+onWindowResize();  // Llama para ajustar el tamaño inicial
+
+cube()

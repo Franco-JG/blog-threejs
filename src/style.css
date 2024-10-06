@@ -15,20 +15,19 @@ body {
   }
 
   section {
-	/* border: 1px solid black; */
 	display: flex;
 	flex-direction: column; /* Cambia la dirección a columna */
 	align-items: center; /* Centra el contenido horizontalmente */
 	justify-content: center; /* Centra el contenido verticalmente */
 	margin-bottom: 20px; /* Espaciado entre secciones si es necesario */
 	width: 100%;
+	border: 1px solid red;
   }
 
   article {
-	/* border: 1px solid green; */
 	width: 90%;
-	max-width: 640px;  /* Puedes establecer un ancho máximo si lo deseas */
 	margin: 0 calc(25%);  /* Margen de 25% menos un ajuste de pixel */
+	border: 1px solid blue;
   }
 
   canvas {
@@ -36,5 +35,6 @@ body {
 	height: auto;
 	margin-bottom: 10px; /* Espacio entre el canvas y el párrafo */
 	box-shadow: 5px 5px 18px 4px rgba(0,0,0,0.25);
+	border: 5px solid green;
   }
   

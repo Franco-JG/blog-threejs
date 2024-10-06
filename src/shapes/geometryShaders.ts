@@ -4,7 +4,7 @@ import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
-import { generarNormales } from "../utils.ts";
+import { generateNormales } from "../utils.ts";
 
 export function geometryShaders(canvas:HTMLCanvasElement){
 
@@ -25,7 +25,7 @@ export function geometryShaders(canvas:HTMLCanvasElement){
     const sphere = new Mesh(sphereGeometry, sphereMaterial);
     scene.add(sphere);
 
-    const normalsGroup = generarNormales(sphereGeometry)
+    const normalsGroup = generateNormales(sphereGeometry)
     scene.add(normalsGroup);
 
     const plane = new Mesh(
