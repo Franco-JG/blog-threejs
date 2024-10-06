@@ -15,8 +15,9 @@ export function createRenderer(canvas : HTMLCanvasElement): WebGLRenderer {
 
 	window.addEventListener('resize',()=>{
 		renderer.setSize(sizes.width, sizes.height);
-		
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1))
 	})
+
 	return renderer
 }
 
