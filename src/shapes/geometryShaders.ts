@@ -1,12 +1,21 @@
 import { Mesh, DoubleSide, PlaneGeometry, SphereGeometry, MeshToonMaterial } from "three";
+
 import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
-import { generateNormales } from "../utils.ts";
+import { generateArticle, generateNormales } from "../utils.ts";
+import { onWindowResize } from "../main.ts";
 
-export function geometryShaders(canvas:HTMLCanvasElement){
+export function geometryShaders(){
+    const article = {
+        title: 'Vectores normales',
+        description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
+      }
+      
+    const canvas = generateArticle(article)
+    onWindowResize()
 
     const scene = createScene()
     const camera = createCamera()
@@ -14,6 +23,7 @@ export function geometryShaders(canvas:HTMLCanvasElement){
     const controls = createOrbitControls(camera, renderer)
     const ambientLight = createAmbientLight()
     const directionalLight = createDirectionalLight()
+    controls.enableZoom =  false
 
     scene.add(ambientLight)
     scene.add(directionalLight)

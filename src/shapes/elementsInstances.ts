@@ -1,11 +1,22 @@
+import { BoxGeometry, DirectionalLightHelper, DoubleSide, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry } from "three";
+
 import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
-import { AxesHelper, BoxGeometry, DirectionalLightHelper, DoubleSide, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, MeshToonMaterial, Object3D, PlaneGeometry } from "three";
+import { generateArticle } from "../utils.ts";
+import { onWindowResize } from "../main.ts";
 
-export function elementsInstances(canvas:HTMLCanvasElement){
+export function elementsInstances(){
+
+    const article = {
+      title: 'Crear instancias de un objeto',
+      description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
+    }
+    
+    const canvas = generateArticle(article)
+    onWindowResize()
 
     const scene = createScene()
     const camera = createCamera()
@@ -13,21 +24,19 @@ export function elementsInstances(canvas:HTMLCanvasElement){
     const controls = createOrbitControls(camera, renderer)
     const directionalLight = createDirectionalLight()
     const ambientLight =  createAmbientLight()
+    controls.enableZoom =  false
 
     camera.position.set(1,2,1)
     controls.target.set(0,1,0)
     
     scene.add(directionalLight)
     scene.add(ambientLight)
-    const axes = new AxesHelper()
-    axes.position.set(0,1,0)
-    scene.add(axes)
     scene.add(new DirectionalLightHelper(directionalLight))
 
 
     // const cubeGeometry = new BoxGeometry(0.2,0.2,0.2)
     const cubeGeometry = new BoxGeometry(0.1,0.1,0.1)
-    const cubeMaterial = new MeshStandardMaterial({color: 0x00ff00, wireframe: true})
+    const cubeMaterial = new MeshStandardMaterial({color: 0x00ff00, wireframe: false})
 
     const plane = new Mesh(
       new PlaneGeometry(20,20),
@@ -58,7 +67,6 @@ export function elementsInstances(canvas:HTMLCanvasElement){
         // Posicionar cada cubo en una cuadrícula en X y Z, con Y constante
         const x = (i - gridSize / 2) * spacing
         const z = (j - gridSize / 2) * spacing
-        console.log(x, y,z);
 
         dummy.position.set(x, y, z)
         dummy.updateMatrix()

@@ -1,9 +1,11 @@
 import { MeshBasicMaterial, BoxGeometry, Mesh } from "three";
+
 import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { generateArticle } from "../utils.ts";
+import { onWindowResize } from "../main.ts";
 
 
 export function cube() {
@@ -14,6 +16,7 @@ export function cube() {
   }
   
   const canvas = generateArticle(article)
+  onWindowResize()
 
   const scene = createScene()
   const camera = createCamera()
@@ -29,8 +32,6 @@ export function cube() {
   )
   scene.add(cube)
   
-  //! -----------------------
-
 
   function animate() {
 
