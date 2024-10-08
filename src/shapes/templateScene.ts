@@ -6,7 +6,7 @@ import { generateArticle } from "../utils.ts";
 import { onWindowResize } from "../main.ts";
 import { AxesHelper } from "three";
 
-export function template(){
+export function templateScene(){
 
     const article = {
       title: 'Template scene.',
@@ -20,11 +20,13 @@ export function template(){
     const camera = createCamera()
     const renderer = createRenderer(canvas)
     const controls = createOrbitControls(camera, renderer)
-    controls.enableZoom =  false
+    controls.enableRotate = true;
 
-    scene.add(new AxesHelper(5))
+    const axes = new AxesHelper(5)
+    scene.add(axes)
 
     function animate() {
+
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
         controls.update()

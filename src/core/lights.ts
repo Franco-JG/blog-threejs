@@ -1,7 +1,7 @@
 import { AmbientLight, DirectionalLight } from "three"
 //Lights
 export function createAmbientLight(){
-    const ambientLight = new AmbientLight(0xffffff, 0.5)
+    const ambientLight = new AmbientLight(0xffffff, 1)
 
     return ambientLight
 }
@@ -12,7 +12,7 @@ export function createDirectionalLight(){
     directionalLight.shadow.mapSize.set(1024,1024)
     directionalLight.shadow.camera.far = 15
     directionalLight.shadow.normalBias = 0.05
-    directionalLight.position.set(-2, 10,0)
+    directionalLight.position.set(0, 5,0)
 
     return directionalLight
 }

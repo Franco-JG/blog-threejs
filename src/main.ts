@@ -1,9 +1,6 @@
 import './style.css'
-import { cube } from "./shapes/cube.ts";
-import { elementsInstances } from './shapes/elementsInstances.ts';
-import { geometryShaders } from './shapes/geometryShaders.ts';
+import { templateScene } from './shapes/templateScene.ts';
 import { torus } from './shapes/torus.ts';
-import { template } from './shapes/templateScene.ts';
 
 export const sizes = {
     width: 0,
@@ -18,9 +15,7 @@ export function onWindowResize() {
     }
 }
 window.addEventListener('resize', onWindowResize);
-elementsInstances()
-geometryShaders()
-torus()
-cube()
-template()
-onWindowResize();  // Llama para ajustar el tamaño inicial
+
+torus()     //Genera el canvas
+
+onWindowResize();  //Ajusta las medidas del canvas

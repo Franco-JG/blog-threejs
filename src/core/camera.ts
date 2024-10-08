@@ -12,10 +12,10 @@ export function createCamera(): PerspectiveCamera {
   )
   camera.position.z = 4
 
-  window.addEventListener('resize',()=>{
-    camera.aspect = sizes.width / sizes.height;
-    camera.updateProjectionMatrix();
-  })
+  // window.addEventListener('resize',()=>{
+  //   camera.aspect = sizes.width / sizes.height;
+  //   camera.updateProjectionMatrix();
+  // })
 
   return camera;
 }

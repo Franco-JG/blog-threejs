@@ -1,4 +1,4 @@
-import { MeshBasicMaterial, Mesh, TorusGeometry } from "three";
+import { Mesh, TorusGeometry, MeshToonMaterial } from "three";
 
 import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
@@ -6,6 +6,7 @@ import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { generateArticle } from "../utils.ts";
 import { onWindowResize } from "../main.ts";
+import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
 
 export function torus() {
   const article = {
@@ -20,18 +21,21 @@ export function torus() {
   const camera = createCamera()
   const renderer = createRenderer(canvas)
   const controls = createOrbitControls(camera, renderer)
-  controls.enableZoom =  false
+  const directionalLight = createDirectionalLight()
+  const ambientLight =  createAmbientLight()
+  scene.add(ambientLight)
+  scene.add(directionalLight)
 
   const torus = new Mesh(
     new TorusGeometry(0.7),
-    new MeshBasicMaterial({
+    new MeshToonMaterial({
         color: 0x00ffff,
     })
   )
   scene.add(torus)
   function animate() {
-    torus.rotation.x += 0.05;
-    torus.rotation.y -= 0.05;
+    torus.rotation.x += 0.01
+    torus.rotation.y += 0.01
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update()
