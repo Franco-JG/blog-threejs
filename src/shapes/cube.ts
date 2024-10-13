@@ -4,8 +4,7 @@ import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
-import { generateArticle } from "../utils.ts";
-import { onWindowResize } from "../main.ts";
+import { createCanvas, resizeRendererAndCamera } from "../utils.ts";
 
 
 export function cube() {
@@ -15,8 +14,7 @@ export function cube() {
     description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
   }
   
-  const canvas = generateArticle(article)
-  onWindowResize()
+  const canvas = createCanvas(article)
 
   const scene = createScene()
   const camera = createCamera()
@@ -34,6 +32,8 @@ export function cube() {
   
 
   function animate() {
+    
+    resizeRendererAndCamera(renderer, camera)
 
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;

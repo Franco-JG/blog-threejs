@@ -5,8 +5,7 @@ import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
-import { generateArticle, generateNormales } from "../utils.ts";
-import { onWindowResize } from "../main.ts";
+import { createCanvas, generateNormales, resizeRendererAndCamera } from "../utils.ts";
 
 export function geometryShaders(){
     const article = {
@@ -14,8 +13,7 @@ export function geometryShaders(){
         description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
       }
       
-    const canvas = generateArticle(article)
-    onWindowResize()
+    const canvas = createCanvas(article)
 
     const scene = createScene()
     const camera = createCamera()
@@ -27,7 +25,7 @@ export function geometryShaders(){
 
     scene.add(ambientLight)
     scene.add(directionalLight)
-    camera.position.set(-4.40,4.71,3.89)
+    camera.position.set(-4.40,4.71,3.89).multiplyScalar(0.4)
     controls.enableZoom = false
 
     const sphereGeometry = new SphereGeometry(1, 32, 32);
@@ -52,6 +50,7 @@ export function geometryShaders(){
     
 
     function animate() {
+        resizeRendererAndCamera(renderer, camera)
         requestAnimationFrame(animate);
 
         renderer.render(scene, camera);

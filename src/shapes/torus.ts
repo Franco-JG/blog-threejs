@@ -4,8 +4,7 @@ import { createScene } from "../core/scene.ts";
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
-import { generateArticle } from "../utils.ts";
-import { onWindowResize } from "../main.ts";
+import { createCanvas, resizeRendererAndCamera } from "../utils.ts";
 
 export function torus() {
   const article = {
@@ -13,8 +12,7 @@ export function torus() {
     description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
   }
   
-  const canvas = generateArticle(article)
-  onWindowResize()
+  const canvas = createCanvas(article)
 
   const scene = createScene()
   const camera = createCamera()
@@ -26,12 +24,15 @@ export function torus() {
     new TorusGeometry(0.7),
     new MeshBasicMaterial({
         color: 0x00ffff,
+        wireframe: true
     })
   )
   scene.add(torus)
   function animate() {
-    torus.rotation.x += 0.05;
-    torus.rotation.y -= 0.05;
+
+    resizeRendererAndCamera(renderer, camera)
+    torus.rotation.x += 0.01;
+    torus.rotation.y -= 0.01;
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update()
