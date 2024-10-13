@@ -5,8 +5,7 @@ import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
 import { createAmbientLight, createDirectionalLight } from "../core/lights.ts";
-import { generateArticle } from "../utils.ts";
-import { onWindowResize } from "../main.ts";
+import { createCanvas, resizeRendererAndCamera } from "../utils.ts";
 
 export function elementsInstances(){
 
@@ -15,8 +14,7 @@ export function elementsInstances(){
       description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
     }
     
-    const canvas = generateArticle(article)
-    onWindowResize()
+    const canvas = createCanvas(article)
 
     const scene = createScene()
     const camera = createCamera()
@@ -35,7 +33,7 @@ export function elementsInstances(){
 
 
     // const cubeGeometry = new BoxGeometry(0.2,0.2,0.2)
-    const cubeGeometry = new BoxGeometry(0.1,0.1,0.1)
+    const cubeGeometry = new BoxGeometry(0.5,0.5,0.5)
     const cubeMaterial = new MeshStandardMaterial({color: 0x00ff00, wireframe: false})
 
     const plane = new Mesh(
@@ -48,7 +46,7 @@ export function elementsInstances(){
     
     // Tamaño del grid
     const gridSize = 2
-    const spacing = 0.2 // Espaciado entre cubos
+    const spacing = 1 // Espaciado entre cubos
 
     // Crear el InstancedMesh
     const count = gridSize * gridSize // Total de cubos
@@ -80,6 +78,7 @@ export function elementsInstances(){
     scene.add(plane)
 
     function animate() {
+        resizeRendererAndCamera(renderer, camera)
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
         controls.update()

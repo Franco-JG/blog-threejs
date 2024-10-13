@@ -1,34 +1,40 @@
-import { createScene } from "../core/scene.ts";
+import * as THREE from 'three'
+
+import { createCanvas, resizeRendererAndCamera } from '../utils.ts';
 import { createCamera } from '../core/camera.ts';
 import { createRenderer } from '../core/renderer.ts';
-import { createOrbitControls } from '../core/orbit-controls.ts';
-import { generateArticle } from "../utils.ts";
-import { onWindowResize } from "../main.ts";
-import { AxesHelper } from "three";
+import { createScene } from '../core/scene.ts';
 
-export function template(){
+export const templateScene = () => {
 
-    const article = {
-      title: 'Template scene.',
-      description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
-    }
-    
-    const canvas = generateArticle(article)
-    onWindowResize()
+	const data = {
+		title: 'Duis velit ea ipsum magna pariatur et cupidatat in ipsum ipsum laboris.',
+		description: `
+			Commodo nulla sunt eiusmod adipisicing. Consequat nulla officia ut exercitation voluptate. Quis pariatur esse voluptate consequat eu reprehenderit et mollit aute et. Et anim mollit qui mollit est ut enim est. Minim eu occaecat sit ad et consequat cupidatat. Cupidatat voluptate magna ipsum anim amet fugiat labore id proident ipsum duis proident consequat. Labore velit nostrud nulla dolor proident sunt quis ut ipsum sit irure ut occaecat.
+			Ea ut nisi mollit quis. Aliquip cupidatat irure nisi quis consectetur esse magna occaecat qui culpa quis incididunt. Officia commodo in dolore pariatur ex proident sit adipisicing dolore nostrud occaecat id quis nostrud. Reprehenderit aliquip id proident qui ipsum pariatur nulla. Sunt proident qui dolore nisi ex cupidatat veniam cupidatat magna reprehenderit. Do irure duis pariatur aliqua in ullamco irure anim nisi minim voluptate sit incididunt ea.
+		`}
+	const canvas = createCanvas(data)
+	const renderer = createRenderer(canvas)
+	const camera = createCamera();
+	const scene = createScene()
 
-    const scene = createScene()
-    const camera = createCamera()
-    const renderer = createRenderer(canvas)
-    const controls = createOrbitControls(camera, renderer)
-    controls.enableZoom =  false
+  const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true})
+  )
+  scene.add(cube)
 
-    scene.add(new AxesHelper(5))
+	function animate() {
 
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-        controls.update()
-      }
-      
-      animate();
+		resizeRendererAndCamera(renderer, camera)
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+		renderer.render( scene, camera );
+		requestAnimationFrame( animate );
+	}
+
+  animate()
+
 }

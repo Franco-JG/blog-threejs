@@ -1,22 +1,9 @@
-//Camera
 import { PerspectiveCamera } from "three"
-import { sizes } from "../main.ts"
 
-const FOV = 45
+export const createCamera = () => {
 
-export function createCamera(): PerspectiveCamera {
-
-  const camera = new PerspectiveCamera(
-    FOV,
-    sizes.width/sizes.height
-  )
-  camera.position.z = 4
-
-  window.addEventListener('resize',()=>{
-    camera.aspect = sizes.width / sizes.height;
-    camera.updateProjectionMatrix();
-  })
-
-  return camera;
+  const camera = new PerspectiveCamera(75, 2, 0.1, 1000)
+  camera.position.z = 2
+  return camera
+  
 }
-
