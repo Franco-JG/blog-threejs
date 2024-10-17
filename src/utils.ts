@@ -1,7 +1,20 @@
 import * as THREE from "three";
 import { ArticleInfo } from "./interfaces/articleInfo.interface.ts";
+import { WebGPURenderer } from "three/webgpu";
 
 export function resizeRendererAndCamera(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera){
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  const needResize = canvas.width !== width || canvas.height !== height;
+  if (needResize) {
+    renderer.setSize(width, height, false);
+    camera.aspect = canvas.clientWidth/canvas.clientHeight
+    camera.updateProjectionMatrix()
+  }
+}
+
+export function resizeRendererAndCameraGPU(renderer: WebGPURenderer, camera: THREE.PerspectiveCamera){
   const canvas = renderer.domElement;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;

@@ -1,11 +1,10 @@
 import * as THREE from 'three';
-import WebGPURenderer from "three/src/renderers/webgpu/WebGPURenderer";
+import WebGPURenderer from "three/src/renderers/webgpu/WebGPURenderer.js";
 import { color, cos, float, mix, range, sin, timerLocal, uniform, uv, vec3, vec4, PI2 } from 'three/tsl';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import { createCanvas, resizeRendererAndCamera } from '../utils';
+import { createCanvas, resizeRendererAndCameraGPU } from '../utils';
 import { createCamera } from '../core/camera';
 import { createScene } from '../core/scene';
-import { createOrbitControls } from '../core/orbit-controls';
+import { createOrbitControlsGPU } from '../core/orbit-controls';
 
 export const particles = () => {
 
@@ -24,6 +23,8 @@ export const particles = () => {
   } );
 
   const size = uniform( 0.08 );
+  console.log(material);
+  
   material.scaleNode = range( 0, 1 ).mul( size );
 
   const time = timerLocal();
@@ -41,7 +42,7 @@ export const particles = () => {
     sin( angle )
   ).mul( radius );
 
-  const randomOffset = range( vec3( - 1 ), vec3( 1 ) ).pow( 3 ).mul( radiusRatio ).add( 0.2 );
+  const randomOffset = range( new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1) ).pow( 3 ).mul( radiusRatio ).add( 0.2 );
 
   material.positionNode = position.add( randomOffset );
 
@@ -54,28 +55,6 @@ export const particles = () => {
   const mesh = new THREE.InstancedMesh( new THREE.PlaneGeometry( 1, 1 ), material, 20000 );
   scene.add( mesh );
 
-  // debug
-
-  // const gui = new GUI();
-
-  // gui.add( size, 'value', 0, 1, 0.001 ).name( 'size' );
-
-  // gui.addColor( { color: colorInside.value.getHex( THREE.SRGBColorSpace ) }, 'color' )
-  //   .name( 'colorInside' )
-  //   .onChange( function ( value ) {
-
-  //     colorInside.value.set( value );
-
-  //   } );
-
-  // gui.addColor( { color: colorOutside.value.getHex( THREE.SRGBColorSpace ) }, 'color' )
-  //   .name( 'colorOutside' )
-  //   .onChange( function ( value ) {
-
-  //     colorOutside.value.set( value );
-
-  //   } );
-
   const data = {
     title: 'Particulas with TSL',
     description: 'WebGPU permite un rendimiento gráfico de alta eficiencia. En este caso, se utiliza para renderizar una simulación de partículas compleja, donde miles de partículas se procesan con alta precisión sin comprometer la velocidad. La ejecución asíncrona, implementada mediante la técnica de bucle de animación, garantiza que cada cuadro se renderice sin bloquear la actualización de la cámara o los controles, lo que permite una experiencia fluida e interactiva. La adaptación del tamaño del render y la cámara se maneja dinámicamente, manteniendo la eficiencia gráfica y asegurando que el rendimiento no se vea afectado, incluso si se redimensiona la ventana. Esto permite que el flujo de renderizado ocurra en paralelo a otras operaciones, clave en aplicaciones que requieren gráficos de alta calidad y respuestas rápidas.'
@@ -85,12 +64,12 @@ export const particles = () => {
   const renderer = new WebGPURenderer( { antialias: true, canvas, alpha: true } );
   renderer.setAnimationLoop( animate );
 
-  const controls = createOrbitControls(camera, renderer)
+  const controls = createOrbitControlsGPU(camera, renderer)
   controls.enableZoom = false;
 
 
   async function animate() {
-    resizeRendererAndCamera(renderer, camera)
+    resizeRendererAndCameraGPU(renderer, camera)
     controls.update();
     renderer.render( scene, camera );
 
