@@ -8,11 +8,9 @@ import { createScene } from '../core/scene.ts';
 export const templateScene = () => {
 
 	const data = {
-		title: 'Duis velit ea ipsum magna pariatur et cupidatat in ipsum ipsum laboris.',
-		description: `
-			Commodo nulla sunt eiusmod adipisicing. Consequat nulla officia ut exercitation voluptate. Quis pariatur esse voluptate consequat eu reprehenderit et mollit aute et. Et anim mollit qui mollit est ut enim est. Minim eu occaecat sit ad et consequat cupidatat. Cupidatat voluptate magna ipsum anim amet fugiat labore id proident ipsum duis proident consequat. Labore velit nostrud nulla dolor proident sunt quis ut ipsum sit irure ut occaecat.
-			Ea ut nisi mollit quis. Aliquip cupidatat irure nisi quis consectetur esse magna occaecat qui culpa quis incididunt. Officia commodo in dolore pariatur ex proident sit adipisicing dolore nostrud occaecat id quis nostrud. Reprehenderit aliquip id proident qui ipsum pariatur nulla. Sunt proident qui dolore nisi ex cupidatat veniam cupidatat magna reprehenderit. Do irure duis pariatur aliqua in ullamco irure anim nisi minim voluptate sit incididunt ea.
-		`}
+		title: 'Wireframe cube (template)',
+		description: `Sit enim deserunt ex ut minim et. Ut esse cillum esse labore adipisicing amet pariatur ad. Incididunt dolor nisi sit fugiat fugiat ex proident velit qui aute aliquip culpa consequat. Commodo dolor Lorem veniam consectetur. Proident et cupidatat veniam tempor.`
+	}
 	const canvas = createCanvas(data)
 	const renderer = createRenderer(canvas)
 	const camera = createCamera();
