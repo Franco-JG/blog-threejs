@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import WebGPURenderer from "three/src/renderers/webgpu/WebGPURenderer";
 import { color, cos, float, mix, range, sin, timerLocal, uniform, uv, vec3, vec4, PI2 } from 'three/tsl';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createCanvas, resizeRendererAndCamera } from '../utils';
 import { createCamera } from '../core/camera';
 import { createScene } from '../core/scene';
