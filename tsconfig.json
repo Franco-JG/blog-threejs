@@ -22,7 +22,9 @@
     "types": ["vite/client","three"],
     "noImplicitAny": false,
     "strictNullChecks": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false
   },
   "include": ["src"]
 }

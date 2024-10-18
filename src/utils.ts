@@ -1,20 +1,8 @@
-import * as THREE from "three";
+import { WebGLRenderer, PerspectiveCamera, SphereGeometry, Group, LineBasicMaterial, Vector3, BufferGeometry, Line } from 'three'
 import { ArticleInfo } from "./interfaces/articleInfo.interface.ts";
 import { WebGPURenderer } from "three/webgpu";
 
-export function resizeRendererAndCamera(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera){
-  const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  const needResize = canvas.width !== width || canvas.height !== height;
-  if (needResize) {
-    renderer.setSize(width, height, false);
-    camera.aspect = canvas.clientWidth/canvas.clientHeight
-    camera.updateProjectionMatrix()
-  }
-}
-
-export function resizeRendererAndCameraGPU(renderer: WebGPURenderer, camera: THREE.PerspectiveCamera){
+export function resizeRendererAndCamera(renderer: WebGLRenderer | WebGPURenderer , camera: PerspectiveCamera){
   const canvas = renderer.domElement;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
@@ -44,9 +32,9 @@ export function createCanvas({ title, description }: ArticleInfo) {
   return canvas;
 }
 
-export function generateNormales(geometry: THREE.SphereGeometry){
-  const normalsGroup = new THREE.Group();
-  const normalsMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
+export function generateNormales(geometry: SphereGeometry){
+  const normalsGroup = new Group();
+  const normalsMaterial = new LineBasicMaterial({ color: 0xff0000 });
   // Obtener las posiciones y normales
   const positions = geometry.attributes.position.array;
   const normals = geometry.attributes.normal.array;
@@ -58,17 +46,17 @@ export function generateNormales(geometry: THREE.SphereGeometry){
       const y = positions[i + 1];
       const z = positions[i + 2];
 
-      const start = new THREE.Vector3(x, y, z);
+      const start = new Vector3(x, y, z);
 
       const nx = normals[i];
       const ny = normals[i + 1];
       const nz = normals[i + 2];
 
-      const end = new THREE.Vector3(x + nx * normalLength, y + ny * normalLength, z + nz * normalLength);
+      const end = new Vector3(x + nx * normalLength, y + ny * normalLength, z + nz * normalLength);
 
-      const normalGeometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+      const normalGeometry = new BufferGeometry().setFromPoints([start, end]);
 
-      const line = new THREE.Line(normalGeometry, normalsMaterial);
+      const line = new Line(normalGeometry, normalsMaterial);
       normalsGroup.add(line);
   }
   return normalsGroup;
