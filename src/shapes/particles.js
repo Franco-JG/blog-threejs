@@ -52,7 +52,7 @@ export const particles = () => {
   const alpha = float( 0.1 ).div( uv().sub( 0.5 ).length() ).sub( 0.2 );
   material.colorNode = vec4( colorFinal, alpha );
 
-  const mesh = new InstancedMesh( new PlaneGeometry( 1, 1 ), material, 20000 );
+  const mesh = new InstancedMesh( new PlaneGeometry( 1, 1 ), material, 10000 );
   scene.add( mesh );
 
   // debug
@@ -84,14 +84,15 @@ export const particles = () => {
   // renderer
   const canvas = createCanvas(data)
   const renderer = new WebGPURenderer( { antialias: true, canvas, alpha: true } );
+  renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setAnimationLoop( animate );
 
   const controls = createOrbitControls(camera, renderer)
-  controls.enableZoom = false;
-  // controls.minDistance = 0.1;
-  // controls.maxDistance = 50;
+  // controls.enableZoom = false;
+  controls.minDistance = 0.1;
+  controls.maxDistance = 50;
 
-  async function animate() {
+  function animate() {
     resizeRendererAndCamera(renderer, camera)
     controls.update();
     renderer.render( scene, camera );
