@@ -5,7 +5,7 @@ import { createCanvas, resizeRendererAndCamera } from '../utils.ts';
 import { createCamera } from '../core/camera.ts';
 import { createScene } from '../core/scene.ts';
 import { createOrbitControls } from '../core/orbit-controls.ts';
-import { WebGPURenderer, SpriteNodeMaterial } from 'three/src/Three.WebGPU.Nodes.js';
+import { WebGPURenderer, SpriteNodeMaterial } from 'three/webgpu'
 
 
 export const particles = () => {
@@ -88,7 +88,7 @@ export const particles = () => {
   renderer.setAnimationLoop( animate );
 
   const controls = createOrbitControls(camera, renderer)
-  // controls.enableZoom = false;
+  controls.enableZoom = false;
   controls.minDistance = 0.1;
   controls.maxDistance = 50;
 

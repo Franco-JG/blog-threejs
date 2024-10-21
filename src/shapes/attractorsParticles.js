@@ -1,21 +1,21 @@
 import * as THREE from 'three';
-import { float, If, PI, color, cos, instanceIndex, Loop, mix, mod, sin, storage, Fn, uint, uniform, uniformArray, hash, vec3, vec4 } from 'three/tsl';
-import { WebGPURenderer, SpriteNodeMaterial, StorageInstancedBufferAttribute } from 'three/src/Three.WebGPU.Nodes.js';
+import { uv, float, If, PI, color, cos, instanceIndex, Loop, mix, mod, sin, storage, Fn, uint, uniform, uniformArray, hash, vec3, vec4 } from 'three/tsl';
+import { WebGPURenderer, SpriteNodeMaterial, StorageInstancedBufferAttribute } from 'three/webgpu'
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { TransformControls } from 'three/addons/controls/TransformControls.js';
 import { createCamera } from '../core/camera';
 import { createScene } from '../core/scene';
-import { createCanvas } from '../utils';
+import { createCanvas, resizeRendererAndCamera } from '../utils';
 import { createOrbitControls } from '../core/orbit-controls';
 
-// let updateCompute;
 
 
 export const attractorParticles = () => {
-
+  
+  let updateCompute;
   const camera = createCamera()
-  camera.position.set( 3, 5, 8 );
+  camera.position.set( 3, 5, 8 ).multiplyScalar(0.3);
 
   const scene = createScene()
 
@@ -31,11 +31,11 @@ export const attractorParticles = () => {
   scene.add( directionalLight );
 
   // renderer
-  const canvas = createCanvas({title:'xd', description:'xd'})
+  const canvas = createCanvas({title:'Attractors particles', description:'Irure quis aute id velit laborum tempor dolor. Cupidatat anim aute qui nostrud cillum aliqua aliquip. Duis officia et minim duis reprehenderit est consectetur eu nulla duis proident proident. Ipsum nulla sit amet ea occaecat incididunt qui eiusmod anim sunt cillum. Velit duis aute tempor cillum adipisicing anim elit id nostrud magna ex ad laborum dolor. Velit ut duis tempor aliqua consectetur dolor. Do consectetur aliqua commodo excepteur et aliqua Lorem aute consectetur veniam pariatur sunt proident duis.'})
   const renderer = new WebGPURenderer( { canvas, antialias: true } );
   renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setAnimationLoop( animate );
   renderer.setClearColor( '#000000' );
+  renderer.setAnimationLoop( animate );
 
   const controls = createOrbitControls(camera, renderer)
   controls.enableDamping = true;
@@ -113,7 +113,7 @@ export const attractorParticles = () => {
 
   // particles
 
-  const count = Math.pow( 2, 18 );
+  const count = Math.pow( 2, 18 );  //262144
   const material = new SpriteNodeMaterial( { transparent: true, blending: THREE.AdditiveBlending, depthWrite: false } );
 
   const attractorMass = uniform( Number( `1e${7}` ) );
@@ -231,7 +231,7 @@ export const attractorParticles = () => {
     position.assign( mod( position.add( halfHalfExtent ), boundHalfExtent ).sub( halfHalfExtent ) );
 
   } );
-  let updateCompute = update().compute( count );
+  updateCompute = update().compute( count );
 
   // nodes
 
@@ -243,8 +243,10 @@ export const attractorParticles = () => {
     const speed = velocity.length();
     const colorMix = speed.div( maxSpeed ).smoothstep( 0, 0.5 );
     const finalColor = mix( colorA, colorB, colorMix );
-
     return vec4( finalColor, 1 );
+    //NOTA Para usar transparencia y que las instancias no se vean cuadrados
+    // const alpha = float( 0.1 ).div( uv().sub( 0.5 ).length() ).sub( 0.2 );
+    // return vec4( finalColor, alpha );
 
   } )();
 
@@ -305,12 +307,11 @@ export const attractorParticles = () => {
   // gui.add( { reset }, 'reset' );
 
 async function animate() {
+    resizeRendererAndCamera(renderer, camera)
+    controls.update();
+    renderer.compute( updateCompute );
+    renderer.render( scene, camera );
 
-  controls.update();
-
-  renderer.compute( updateCompute );
-  renderer.render( scene, camera );
-
-}
+  }
 
 }
