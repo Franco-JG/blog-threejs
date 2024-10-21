@@ -92,7 +92,7 @@ export const particles = () => {
   controls.minDistance = 0.1;
   controls.maxDistance = 50;
 
-  function animate() {
+  async function animate() {
     resizeRendererAndCamera(renderer, camera)
     controls.update();
     renderer.render( scene, camera );
