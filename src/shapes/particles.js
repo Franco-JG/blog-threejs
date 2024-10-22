@@ -14,7 +14,8 @@ export const particles = () => {
   camera.position.set( 4, 2, 5 ).multiplyScalar(0.7);
 
   const scene = createScene()
-  scene.background = new Color( 0x201919 );
+  scene.background = new Color( 0x000000 );
+  // scene.background = new Color( 0x201919 );
 
   // galaxy
   const material = new SpriteNodeMaterial( {

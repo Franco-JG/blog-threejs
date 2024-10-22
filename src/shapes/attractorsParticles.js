@@ -39,8 +39,9 @@ export const attractorParticles = () => {
 
   const controls = createOrbitControls(camera, renderer)
   controls.enableDamping = true;
-  controls.minDistance = 0.1;
-  controls.maxDistance = 50;
+  controls.enableZoom =  false
+  // controls.minDistance = 0.1;
+  // controls.maxDistance = 50;
 
 
   // attractors
@@ -113,7 +114,7 @@ export const attractorParticles = () => {
 
   // particles
 
-  const count = Math.pow( 2, 18 );  //262144
+  const count = Math.pow( 2, 15 );  //262144
   const material = new SpriteNodeMaterial( { transparent: true, blending: THREE.AdditiveBlending, depthWrite: false } );
 
   const attractorMass = uniform( Number( `1e${7}` ) );
@@ -125,7 +126,7 @@ export const attractorParticles = () => {
   const velocityDamping = uniform( 0.1 );
   const scale = uniform( 0.008 );
   const boundHalfExtent = uniform( 8 );
-  const colorA = uniform( color( '#5900ff' ) );
+  const colorA = uniform( color( '#00ff15' ) );
   const colorB = uniform( color( '#ffa575' ) );
 
   const positionBuffer = storage( new StorageInstancedBufferAttribute( count, 3 ), 'vec3', count );
